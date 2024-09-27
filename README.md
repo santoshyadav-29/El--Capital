@@ -1,2 +1,2 @@
-# El--Capital
-MBMC Ideax
+# El-Capitán
+MBMC IdeaX
