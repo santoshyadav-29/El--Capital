@@ -1,9 +1,13 @@
-import React from 'react'
+import { Button } from "@/components/ui/button";
+
 
 const Details = () => {
   return (
-    <div>Details</div>
-  )
-}
+    <div>
+      <Button>Click me</Button>
+      
+    </div>
+  );
+};
 
-export default Details
+export default Details;
