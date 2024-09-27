@@ -1,10 +1,12 @@
 import { useState } from "react";
-import axios from "axios";
-
+import Axios from "axios";
+import defaultImage from "../assets/algal bloom.jpeg";
 const Classify = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [classificationResult, setClassificationResult] = useState<string | null>(null);
+  const [classificationResult, setClassificationResult] = useState<
+    string | null
+  >(null);
 
   // Handle Image Selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,22 +28,17 @@ const Classify = () => {
     const formData = new FormData();
     formData.append("image", selectedImage);
 
-    try {
-      const response = await axios.post(
-        "https://your-backend-url.com/classify", // Replace with your backend URL
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      // Assuming the backend sends back a classification result
-      setClassificationResult(response.data.result);
-    } catch (error) {
-      console.error("Error classifying image:", error);
-    }
+    Axios.post("http://localhost:3000/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => {
+        console.log("Classification Result:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error uploading image:", error);
+      });
   };
 
   return (
@@ -59,39 +56,54 @@ const Classify = () => {
       <h2 className="text-2xl font-bold p-3">Classify its types</h2>
 
       {/* Image Picker and Preview */}
-      <div className="flex flex-col items-center space-y-4">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="p-2 border border-gray-300 rounded-md"
-        />
-
-        {/* Display Image Preview */}
-        {previewImage && (
-          <div className="flex flex-col items-center">
-            <img
-              src={previewImage}
-              alt="Selected Algal Bloom"
-              className="w-[200px] h-[200px] object-cover rounded-md shadow-lg"
+      <div id="classify-main " className="flex flex-col gap-1  items-center">
+        <div className="flex  items-center justify-center gap-4">
+          <label className="flex flex-col items-center justify-center w-[400px] h-[200px] border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 transition-all">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden" // Hide the default file input
             />
-            <button
-              onClick={handleImageSubmit}
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md"
-            >
-              Classify Algal Bloom
-            </button>
-          </div>
-        )}
+            <div className="flex flex-col items-center justify-center">
+              {/* <img
+              src="/path/to/upload-icon.png" // Replace with your upload icon path
+              alt="Upload Icon"
+              className="w-12 h-12 mb-2" // Icon size
+            /> */}
+              <p className="text-[100px] opacity-30">📷</p>
+              <span className="text-gray-500">
+                Drag and drop or click to upload
+              </span>
+            </div>
+          </label>
 
-        {/* Display Classification Result */}
-        {classificationResult && (
-          <div className="mt-6 bg-green-100 p-4 rounded-md shadow-md">
-            <h3 className="text-lg font-bold">Classification Result:</h3>
-            <p>{classificationResult}</p>
-          </div>
-        )}
+          {/* Display Image Preview */}
+          {
+            <div className="flex flex-col items-center">
+              <img
+                src={previewImage || defaultImage}
+                alt="Selected Algal Bloom"
+                className="w-[400px] h-[200px] object-cover rounded-md shadow-lg border-2 border-green-500"
+              />
+            </div>
+          }
+        </div>
+        <button
+          onClick={handleImageSubmit}
+          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all"
+        >
+          Classify Algal Bloom
+        </button>
       </div>
+
+      {/* Display Classification Result */}
+      {classificationResult && (
+        <div className="mt-6 bg-green-100 p-4 rounded-md shadow-md">
+          <h3 className="text-lg font-bold">Classification Result:</h3>
+          <p>{classificationResult}</p>
+        </div>
+      )}
     </div>
   );
 };

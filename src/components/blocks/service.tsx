@@ -1,12 +1,12 @@
 import { useState } from "react";
-import axios from "axios"; // Import axios
+import Axios from "axios"; // Import axios
 
 interface ServiceProps {
   name: string;
   about: string;
   unit: string;
-  value: number;
-  onChange: (value: number) => void;
+  value: string; // Changed value to string to allow empty input
+  onChange: (value: string) => void;
 }
 
 const Service = (props: ServiceProps) => {
@@ -20,7 +20,7 @@ const Service = (props: ServiceProps) => {
             type="number"
             className="w-[60px] p-2 mt-2 border-b border-gray-300"
             value={props.value}
-            onChange={(e) => props.onChange(Number(e.target.value))}
+            onChange={(e) => props.onChange(e.target.value)} // Allow string value
           />{" "}
           {props.unit}
         </span>
@@ -30,44 +30,37 @@ const Service = (props: ServiceProps) => {
 };
 
 const Services = () => {
-  const [ph, setPh] = useState<number>(0);
-  const [waterTemp, setWaterTemp] = useState<number>(0); // Changed variable name to match parameter
-  const [turbidity, setTurbidity] = useState<number>(0);
-  const [doValue, setDoValue] = useState<number>(0); // Changed variable name to match parameter
-  const [tn, setTn] = useState<number>(0); // Changed variable name to match parameter
-  const [tp, setTp] = useState<number>(0); // Changed variable name to match parameter
+  const [ph, setPh] = useState<string>(""); // Set initial value to an empty string
+  const [waterTemp, setWaterTemp] = useState<string>(""); // Set initial value to an empty string
+  const [turbidity, setTurbidity] = useState<string>(""); // Set initial value to an empty string
+  const [doValue, setDoValue] = useState<string>(""); // Set initial value to an empty string
+  const [tn, setTn] = useState<string>(""); // Set initial value to an empty string
+  const [tp, setTp] = useState<string>(""); // Set initial value to an empty string
 
   const handleSubmit = async () => {
-    const data = {
-      pH: ph,
-      water_temp: waterTemp,
-      turbidity,
-      DO: doValue,
-      TN: tn,
-      TP: tp,
-    };
-
-    try {
-      // Use axios to send the POST request
-      const response = await axios.post(
-        "https://c179-110-34-13-5.ngrok-free.app/predict/",
-        data, // Axios automatically stringifies the data for you
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        const result = response.data;
-        console.log("Success:", result);
-      } else {
-        console.error("Error:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    // Convert input values to numbers before sending the data
+    // const data = {
+    //   pH: Number(ph),
+    //   water_temp: Number(waterTemp),
+    //   turbidity: Number(turbidity),
+    //   DO: Number(doValue),
+    //   TN: Number(tn),
+    //   TP: Number(tp),
+    // };
+    Axios.post("http://localhost:3000/predict", {
+      pH: Number(ph),
+      water_temp: Number(waterTemp),
+      turbidity: Number(turbidity),
+      DO: Number(doValue),
+      TN: Number(tn),
+      TP: Number(tp),
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error calculating daily needs:", error);
+      });
   };
 
   return (
