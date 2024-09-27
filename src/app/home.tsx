@@ -1,7 +1,9 @@
 import Logo from "../assets/green-leaf-logo-free-png.webp";
 import Services from "@/components/blocks/service";
+import AlgalBloomGraph from "@/components/blocks/linechart";
 
 const Home = () => {
+ 
   return (
     <div className=" mx-auto w-[90%] ">
       <section
@@ -16,9 +18,16 @@ const Home = () => {
           Perspiciatis nihil, ullam aliquid error eos totam suscipit iste enim
           consequuntur adipisci?
         </p>
-          </section>
-          <Services/>
-     
+      </section>
+      <Services />
+      <AlgalBloomGraph
+        ph={5}
+        waterTemp={32}
+        turbidity={53}
+        doValue={33}
+        tn={3}
+        tp={32}
+      />
     </div>
   );
 };
