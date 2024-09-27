@@ -5,10 +5,10 @@ const Navbar = () => {
     <>
       <header className="flex justify-around items-center m-3">
         <div className="logo text-3xl text-green-400 font-bold">
-          Algooo.info
+          Algoo.info
         </div>
         <div className="nav-links text-gray-700">
-          <ul className="flex gap-3">
+          <ul className=" gap-3 hidden sm:flex">
             <a href="#home">
               <li>Home</li>{" "}
             </a>
