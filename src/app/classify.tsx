@@ -45,7 +45,7 @@ const Classify = () => {
   };
 
   return (
-    <div className="mx-auto w-[0%] flex flex-col items-center justify-center min-h-screen ">
+    <div className="mx-auto w-[90%] flex flex-col items-center justify-center min-h-screen ">
       <h1 className="text-4xl text-center font-bold p-3 mt-8 ">
         Algal Blooms and its types
       </h1>
