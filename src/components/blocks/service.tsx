@@ -5,10 +5,13 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   BarChart,
   Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
 import lightImg from "../../assets/light.png";
@@ -58,8 +61,8 @@ const Services: React.FC = () => {
 
   const [algaePopulation, setAlgaePopulation] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [inputHistory, setInputHistory] = useState<Array<any>>([]);
 
   const validateInputs = (): boolean => {
     const inputs = [light, nitrate, iron, phosphate, temperature, ph, co2];
@@ -74,7 +77,6 @@ const Services: React.FC = () => {
 
     setIsLoading(true);
     setError(null);
-    setAlgaePopulation(null);
 
     try {
       const response = await axios.post(
@@ -90,7 +92,21 @@ const Services: React.FC = () => {
         }
       );
       setAlgaePopulation(response.data.predicted_population);
-      console.log("Prediction result:", response.data.predicted_population);
+      
+      // Update input history
+      setInputHistory(prevHistory => [
+        ...prevHistory,
+        {
+          Light: Number(light),
+          Nitrate: Number(nitrate),
+          Iron: Number(iron),
+          Phosphate: Number(phosphate),
+          Temperature: Number(temperature),
+          pH: Number(ph),
+          CO2: Number(co2),
+        }
+      ]);
+
     } catch (error) {
       setError("Error calculating prediction. Please try again.");
       console.error("Error calculating prediction:", error);
@@ -228,8 +244,27 @@ const Services: React.FC = () => {
                 <YAxis />
                 <Tooltip />
                 <Bar dataKey="value" fill="#8884d8" />
-                <Bar dataKey="value" fill="#82ca9d" />
               </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <h3 className="text-xl font-bold mt-8 mb-4">Input Parameters History</h3>
+          <div className="mt-4 h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={inputHistory}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="index" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="Light" stroke="#8884d8" />
+                <Line type="monotone" dataKey="Nitrate" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="Iron" stroke="#ffc658" />
+                <Line type="monotone" dataKey="Phosphate" stroke="#ff7300" />
+                <Line type="monotone" dataKey="Temperature" stroke="#d0ed57" />
+                <Line type="monotone" dataKey="pH" stroke="#8dd1e1" />
+                <Line type="monotone" dataKey="CO2" stroke="#a4de6c" />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
