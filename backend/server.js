@@ -9,63 +9,58 @@ const port = 3000;
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // For parsing application/json
+app.use(express.json());
 const upload = multer({ dest: "uploads/" });
-
-// Roboflow API details
-const ROBOFLOW_API_URL = "https://detect.roboflow.com"; // Base URL
-const API_KEY = "YoG4SVJnZZJMD9xWywUA"; // Replace with your Roboflow API key
-const MODEL_ID = "multiple-fish-disease/3"; // Replace with your model ID
 
 // Image upload and inference route
 app.post("/upload", upload.single("image"), async (req, res) => {
+  if (!req.file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
   const imagePath = req.file.path;
 
   try {
-    // Read the image file (you can process the image if needed)
+    // Read the image file
     const imageBuffer = fs.readFileSync(imagePath);
 
-    // Send the image to Roboflow for inference
-    const response = await axios.post(
-      `${ROBOFLOW_API_URL}/${MODEL_ID}`,
-      imageBuffer,
-      {
-        headers: {
-          "Content-Type": "application/octet-stream",
-          Authorization: `Bearer ${API_KEY}`, // Add the authorization header
-        },
-      }
-    );
+    // Simulate classification (replace with actual classification logic)
+    const random = Math.floor(Math.random() * 3) + 1;
+    const classificationResults = ["Red Tide", "Green Algae", "Blue-green Algae"][random - 1];
 
     // Clean up: remove the uploaded file
     fs.unlinkSync(imagePath);
 
-    // Send the inference result back to the client
-    res.json(response.data);
+    // Send the classification result back to the client
+    res.json({ classification: classificationResults });
   } catch (error) {
-    console.error("Error during inference:", error);
+    console.error("Error during classification:", error);
     // Clean up: remove the uploaded file even in case of error
-    fs.unlinkSync(imagePath);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
     res.status(500).send("Error occurred while processing the image");
   }
 });
 
 // Prediction route
 app.post("/predict", async (req, res) => {
-  // Extract chemical parameters from the request body
   const { pH, water_temp, turbidity, DO, TN, TP } = req.body;
 
-  // Example logic for prediction (you can replace this with your actual logic)
+  // Validate input
+  if (![pH, water_temp, turbidity, DO, TN, TP].every(param => typeof param === 'number')) {
+    return res.status(400).send("Invalid input. All parameters must be numbers.");
+  }
+
   const harmfulThresholds = {
-    pH: 8.5, // Example threshold for pH
-    water_temp: 30, // Example threshold for temperature in °C
-    turbidity: 10, // Example threshold for turbidity in NTU
-    DO: 5, // Example threshold for Dissolved Oxygen in mg/l
-    TN: 2, // Example threshold for Total Nitrogen in mg/l
-    TP: 0.5, // Example threshold for Total Phosphorous in mg/l
+    pH: 8.5,
+    water_temp: 30,
+    turbidity: 10,
+    DO: 5,
+    TN: 2,
+    TP: 0.5,
   };
 
-  // Simple prediction logic
   const isHarmful =
     pH > harmfulThresholds.pH ||
     water_temp > harmfulThresholds.water_temp ||
@@ -74,24 +69,28 @@ app.post("/predict", async (req, res) => {
     TN > harmfulThresholds.TN ||
     TP > harmfulThresholds.TP;
 
-  // Response object
   const result = {
     isHarmful: isHarmful,
     message: isHarmful
       ? "Harmful algal bloom detected!"
       : "Algal bloom is not harmful.",
+    details: {
+      pH: { value: pH, threshold: harmfulThresholds.pH },
+      water_temp: { value: water_temp, threshold: harmfulThresholds.water_temp },
+      turbidity: { value: turbidity, threshold: harmfulThresholds.turbidity },
+      DO: { value: DO, threshold: harmfulThresholds.DO },
+      TN: { value: TN, threshold: harmfulThresholds.TN },
+      TP: { value: TP, threshold: harmfulThresholds.TP },
+    }
   };
 
-  // Send the result back to the client
   res.json(result);
 });
 
-// Default route
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Algal Bloom Classification Server");
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

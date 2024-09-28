@@ -1,50 +1,57 @@
-# React + TypeScript + Vite
+import React, { useState } from 'react';
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+const ImageUpload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [detectionResult, setDetectionResult] = useState(null);
 
-Currently, two official plugins are available:
+  // Handle file input change
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  // Handle file upload (POST request)
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      alert("Please select an image first.");
+      return;
+    }
 
-## Expanding the ESLint configuration
+    const formData = new FormData();
+    formData.append("file", selectedFile);
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+    try {
+      const response = await fetch("https://your-ngrok-url.ngrok-free.app/predict/", {
+        method: "POST",
+        body: formData,
+      });
 
-- Configure the top-level `parserOptions` property like this:
+      if (!response.ok) {
+        throw new Error("Something went wrong.");
+      }
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+      const result = await response.json();
+      setDetectionResult(result);
+      console.log(result);
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+  return (
+    <div>
+      <h1>Upload Image for Detection</h1>
+      <input type="file" accept="image/*" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload Image</button>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+      {detectionResult && (
+        <div>
+          <h3>Detection Result:</h3>
+          <pre>{JSON.stringify(detectionResult, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ImageUpload;

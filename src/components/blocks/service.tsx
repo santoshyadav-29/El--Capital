@@ -80,7 +80,7 @@ const Services: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://sushanadhikari-algae-bloom-prediction.hf.space/predict",
+        "https://sushanadhikari-algaebloom.hf.space/predict",
         {
           Light: Number(light),
           Nitrate: Number(nitrate),
