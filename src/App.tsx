@@ -12,7 +12,7 @@ import mascot3 from "./assets/mascot3.png";
 
 import Footer from "./components/blocks/footer";
 import Home from "./app/home";
-import logo from "./assets/logo2.png";
+
 
 function App() {
   return (
@@ -31,12 +31,9 @@ function App() {
             className="hidden md:block absolute md:right-0 md:top-[90px] md:w-[140px] opacity-50 animate-moveLeftRight"
           />
           <img className="w-[20%] " src={mascot} alt="" />
-          <h1 className="text-4xl font-bold p-3">Welcome to Algoo</h1>
-          <p className="text-lg text-center p-3 md:w-[80ch] text-gray-500">
-            Algoo is a simple calculator that helps you calculate your daily
-            needs. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Perspiciatis nihil, ullam aliquid error eos totam suscipit iste enim
-            consequuntur adipisci?
+          <h1 className="text-4xl font-bold p-3">Welcome to ILYMA</h1>
+          <p className="text-lg text-center p-3 md:w-[80ch] text-gray-500 text">
+          As the demand of aquaculture and water resources is increasing in the world the algal bloom problem becomes more and more severe these days. ILYMA is a project aimed at developing a research tool to predict the algal bloom population(concentration). It also classify them into different categories and provide a visualization of the data giving a clear insight of the data.
           </p>
           <SignInButton>
             <button className="bg-green-500 text-white font-bold py-2 px-4 rounded">

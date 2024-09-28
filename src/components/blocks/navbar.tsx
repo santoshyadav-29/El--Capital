@@ -25,7 +25,7 @@ const Navbar = () => {
     <div className="sticky top-0 bg-white text-white z-20 p-3 pb-5 shadow-md">
       <header className="flex justify-around items-center">
         <div className="logo text-3xl text-green-400 font-bold hover:cursor-pointer hover:text-green-500 transition-colors">
-          <Link to="/#">Algoo.info</Link>
+          <Link to="/#">ILYMA.info</Link>
         </div>
         <div className="nav-links text-gray-400">
           <ul className="gap-3 hidden sm:flex font-bold">

@@ -12,12 +12,9 @@ const Home = () => {
         className="flex flex-col items-center justify-center mt-10"
       >
         <img className="block w-[30%]" src={mascot} alt="Algoo" />
-        <h1 className="text-4xl text-center font-bold p-3">Welcome to Algoo</h1>
+        <h1 className="text-4xl text-center font-bold p-3">Welcome to ILYMO</h1>
         <p className="text-lg text-center p-3 md:w-[80ch] text-gray-500">
-          Algoo is a simple calculator that helps you calculate your daily
-          needs. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Perspiciatis nihil, ullam aliquid error eos totam suscipit iste enim
-          consequuntur adipisci?
+        As the demand of aquaculture and water resources is increasing in the world the algal bloom problem becomes more and more severe these days. ILYMO is a project aimed at developing a research tool to predict the algal bloom population(concentration). It also classify them into different categories and provide a visualization of the data giving a clear insight of the data.
         </p>
       </section>
       <Services />
