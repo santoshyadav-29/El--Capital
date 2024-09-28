@@ -4,6 +4,22 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        moveLeftRight: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(40px)' },
+          '75%': { transform: 'translateX(-40px)' },
+        },
+        moveUpDown: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '25%': { transform: 'translateY(40px)' },
+          '75%': { transform: 'translateY(-40px)' },
+        },
+      },
+      animation: {
+        moveLeftRight: 'moveLeftRight 3s ease-in-out infinite',
+        moveUpDown: 'moveUpDown 3s ease-in-out infinite',
+      },
       fontFamily: {
         fantasy: ["Cinzel", "serif"], // Add your font here
       },

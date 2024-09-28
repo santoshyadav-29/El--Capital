@@ -1,6 +1,7 @@
 import Logo from "../assets/green-leaf-logo-free-png.webp";
 import Services from "@/components/blocks/service";
 import Classify from "@/components/blocks/classify";
+import mascot from "../assets/mascot.png";
 
 const Home = () => {
  
@@ -10,7 +11,7 @@ const Home = () => {
         id="home"
         className="flex flex-col items-center justify-center mt-10"
       >
-        <img className="block w-[30%]" src={Logo} alt="Algoo" />
+        <img className="block w-[30%]" src={mascot} alt="Algoo" />
         <h1 className="text-4xl text-center font-bold p-3">Welcome to Algoo</h1>
         <p className="text-lg text-center p-3 md:w-[80ch] text-gray-500">
           Algoo is a simple calculator that helps you calculate your daily

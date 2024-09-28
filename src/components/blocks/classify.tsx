@@ -92,7 +92,7 @@ const Classify = () => {
         </div>
         <button
           onClick={handleImageSubmit}
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all"
+          className="mt-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition-all"
         >
           Classify Algal Bloom
         </button>

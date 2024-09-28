@@ -209,7 +209,7 @@ const Services: React.FC = () => {
       </div>
 
       <button
-        className="bg-blue-500 text-white p-2 px-4 rounded-md m-4 hover:bg-blue-600 transition-colors disabled:bg-gray-400"
+        className="bg-green-500 text-white p-2 px-4 rounded-md m-4 hover:bg-green-600 transition-colors disabled:bg-gray-400"
         onClick={handleSubmit}
         disabled={isLoading}
       >
