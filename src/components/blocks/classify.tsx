@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Axios from "axios";
-import defaultImage from "../assets/algal bloom.jpeg";
+import defaultImage from "../../assets/algal bloom.jpeg";
+
 const Classify = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -42,7 +43,7 @@ const Classify = () => {
   };
 
   return (
-    <div className="mx-auto w-[90%] flex flex-col items-center justify-center min-h-screen ">
+    <div id="classify" className="mx-auto w-[90%] flex flex-col items-center justify-center min-h-screen ">
       <h1 className="text-4xl text-center font-bold p-3 mt-8 ">
         Algal Blooms and its types
       </h1>

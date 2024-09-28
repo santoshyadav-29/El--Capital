@@ -1,6 +1,7 @@
 import Logo from "../assets/green-leaf-logo-free-png.webp";
 import Services from "@/components/blocks/service";
 import AlgalBloomGraph from "@/components/blocks/linechart";
+import Classify from "@/components/blocks/classify";
 
 const Home = () => {
  
@@ -28,6 +29,7 @@ const Home = () => {
         tn={3}
         tp={32}
       />
+      <Classify />
     </div>
   );
 };

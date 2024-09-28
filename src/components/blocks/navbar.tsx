@@ -35,9 +35,9 @@ const Navbar = () => {
             <a href="#services" onClick={(e) => handleScroll(e, "services")}>
               <li>Calculate</li>
             </a>
-            <Link to="/classify">
+            <a href="#classify" onClick={(e) => handleScroll(e, "classify")}>
               <li>Classify</li>
-            </Link>
+            </a>
           </ul>
         </div>
       </header>

@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./app/home";
-import Classify from "./app/classify";
 import Navbar from "./components/blocks/navbar";
 import Footer from "./components/blocks/footer";
 
@@ -12,7 +11,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/classify" element={<Classify />} />
+         
         </Routes>
       </div>
       <Footer />
