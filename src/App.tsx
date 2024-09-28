@@ -30,7 +30,7 @@ function App() {
             alt=""
             className="hidden md:block absolute md:right-0 md:top-[90px] md:w-[140px] opacity-50 animate-moveLeftRight"
           />
-          <img className="w-[20%] " src={logo} alt="" />
+          <img className="w-[20%] " src={mascot} alt="" />
           <h1 className="text-4xl font-bold p-3">Welcome to Algoo</h1>
           <p className="text-lg text-center p-3 md:w-[80ch] text-gray-500">
             Algoo is a simple calculator that helps you calculate your daily

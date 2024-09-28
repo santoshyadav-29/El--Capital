@@ -1,57 +1,79 @@
-import React, { useState } from 'react';
+# El Capitan Project
 
-const ImageUpload = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [detectionResult, setDetectionResult] = useState(null);
+## Overview
+El Capitan is a project aimed at developing a research tool to predict the algal bloom population(concentration). It also classify them into different categories and provide a visualization of the data giving a clear insight of the data.
 
-  // Handle file input change
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+## Features
+The project has the following features:
 
-  // Handle file upload (POST request)
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      alert("Please select an image first.");
-      return;
-    }
+- Feature 1: Algal Bloom Prediction
+  
+- Feature 2: Algal Bloom Classification and suggestion
+- Feature 3: Authenticated User Access and Clean UI
+- Feature 4: Data Visualization
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+## Installation
+To install and set up this project, follow these steps:
 
-    try {
-      const response = await fetch("https://your-ngrok-url.ngrok-free.app/predict/", {
-        method: "POST",
-        body: formData,
-      });
+1. Clone the repository:
+  ```sh
+  git clone git@github.com:santoshyadav-29/El--Capitan.git
+  ```
+2. Navigate to the project directory:
+  ```sh
+  cd el-capitan
+  ```
+3. Install dependencies:
+  ```sh
+  npm install
+  ```
 
-      if (!response.ok) {
-        throw new Error("Something went wrong.");
-      }
+## Usage
+To start using the project, run:
+```sh
+npm run dev
+```
 
-      const result = await response.json();
-      setDetectionResult(result);
-      console.log(result);
+## Orginaity
+This project is orginally developed for MBMC **IdeaX** 2024 hackathon. This is our original content and we have not copied from any source.
+The idea of this project was inspired from different research papers as we researched about aquaculture in our past projects.
 
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
 
-  return (
-    <div>
-      <h1>Upload Image for Detection</h1>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload Image</button>
+## Technologies
+The project is built using the following technologies:
 
-      {detectionResult && (
-        <div>
-          <h3>Detection Result:</h3>
-          <pre>{JSON.stringify(detectionResult, null, 2)}</pre>
-        </div>
-      )}
-    </div>
-  );
-};
+- React
+- Typescript
+- Tailwind CSS
+- NodeJs
+- Clerk
+- Sadcn/ui
+- Recharts
+- Roboflow 
+- Hugging Face
+- python
+- FastAPI
+- Docker
 
-export default ImageUpload;
+## Frontend
+The frontend of the project is built using React and Tailwind CSS. The frontend is responsible for the user interface and user interaction.
+
+## Backend
+The backend of the project is built using NodeJs. The backend is responsible for handling the requests from the frontend and communicating with the ML model.
+
+## ML Model
+The ML model is built using FastAPI and Python. The model is responsible for predicting the algal bloom population and classifying them into different categories. The Model is trained using Roboflow and Hugging Face.
+
+## Credits and sources
+
+- [Roboflow](https://roboflow.com/)
+- [Hugging Face](https://huggingface.co/)
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [NodeJs](https://nodejs.org/en/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Copilot and Chatgpt for helping us in the project completion within the limited time in the hackathon.
+  
+ 
+
+
